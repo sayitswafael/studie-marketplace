@@ -16,14 +16,14 @@ const getPlatformBadge = (platform) => {
   switch (platform) {
     case 'shopee':
       return {
-        name: 'Shopee Affiliate',
+        name: 'Shopee Vendor',
         bg: 'bg-orange-50 text-orange-700 border-orange-200',
         badgeBg: 'bg-[#EE4D2D] text-white',
         icon: '🛍️'
       };
     case 'tiktok':
       return {
-        name: 'TikTok Shop',
+        name: 'TikTok',
         bg: 'bg-slate-900 text-white border-slate-800',
         badgeBg: 'bg-black text-white',
         icon: '🎵'
@@ -464,10 +464,9 @@ function App() {
                         className="bg-transparent font-medium text-gray-800 focus:outline-none cursor-pointer"
                       >
                         <option value="all">All Sellers</option>
-                        <option value="shopee">Shopee Only</option>
-                        <option value="tiktok">TikTok Shop Only</option>
-                        <option value="whatsapp">WhatsApp Vendor</option>
-                        <option value="google_forms">Google Forms</option>
+                        <option value="shopee">Shopee Vendor</option>
+                        <option value="tiktok">TikTok</option>
+                        <option value="others">Others</option>
                       </select>
                     </div>
                   </div>
@@ -1727,10 +1726,11 @@ function AddProductForm({ categories, onSuccess }) {
                     onChange={(e) => handleLinkChange(idx, 'platform', e.target.value)}
                     className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs bg-white"
                   >
-                    <option value="shopee">Shopee Affiliate</option>
-                    <option value="tiktok">TikTok Shop</option>
+                    <option value="shopee">Shopee Vendor</option>
+                    <option value="tiktok">TikTok</option>
                     <option value="whatsapp">WhatsApp Direct</option>
                     <option value="google_forms">Google Forms</option>
+                    <option value="others">Others</option>
                   </select>
                 </div>
 

@@ -325,8 +325,12 @@ export class App extends DurableObject {
       }
 
       if (platform && platform !== 'all') {
-        query += ` AND p.id IN (SELECT DISTINCT product_id FROM purchase_links WHERE platform = ?)`;
-        params.push(platform);
+        if (platform === 'others') {
+          query += ` AND p.id IN (SELECT DISTINCT product_id FROM purchase_links WHERE platform NOT IN ('shopee', 'tiktok'))`;
+        } else {
+          query += ` AND p.id IN (SELECT DISTINCT product_id FROM purchase_links WHERE platform = ?)`;
+          params.push(platform);
+        }
       }
 
       if (sort === 'latest') {
@@ -431,7 +435,7 @@ export class App extends DurableObject {
           if (!link.url || typeof link.url !== 'string' || !link.url.startsWith('http')) {
             return c.json({ error: `Invalid URL format for purchase link platform: ${link.platform || 'unknown'}` }, 400);
           }
-          if (!['shopee', 'tiktok', 'whatsapp', 'google_forms'].includes(link.platform)) {
+          if (!['shopee', 'tiktok', 'whatsapp', 'google_forms', 'others'].includes(link.platform)) {
             return c.json({ error: `Unsupported platform type: ${link.platform}` }, 400);
           }
         }
