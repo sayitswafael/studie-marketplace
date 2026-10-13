@@ -8,7 +8,7 @@ const {
   CheckCircle2, XCircle, AlertCircle, Clock, BarChart3, Tag, Layers,
   ShieldCheck, RefreshCw, ChevronRight, Share2, Info, Lock, Trash2,
   Edit, Check, X, ArrowLeft, MessageSquare, FileText, ChevronLeft,
-  Smartphone, Monitor, ThumbsUp, Eye, Sparkles, Building2, HelpCircle
+  Smartphone, Monitor, ThumbsUp, Eye, Sparkles, Building2, HelpCircle, Key, Save
 } = LucideIcons;
 
 // Helper function to render platform badge styling
@@ -75,10 +75,16 @@ function App() {
   const [adminToken, setAdminToken] = useState(localStorage.getItem('utm_admin_token') || '');
   const [adminPasscode, setAdminPasscode] = useState('');
   const [adminAuthError, setAdminAuthError] = useState('');
-  const [adminTab, setAdminTab] = useState('pending'); // 'pending', 'all', 'categories', 'analytics'
+  const [adminTab, setAdminTab] = useState('pending'); // 'pending', 'all', 'categories', 'analytics', 'settings'
   const [adminProducts, setAdminProducts] = useState([]);
   const [adminAnalytics, setAdminAnalytics] = useState(null);
   const [newCatName, setNewCatName] = useState('');
+
+  // Admin Passcode Change State
+  const [newAdminPasscode, setNewAdminPasscode] = useState('');
+  const [confirmAdminPasscode, setConfirmAdminPasscode] = useState('');
+  const [passcodeChangeError, setPasscodeChangeError] = useState('');
+  const [passcodeChangeSuccess, setPasscodeChangeSuccess] = useState('');
 
   // Toast / Modal Notification
   const [toast, setToast] = useState(null);
@@ -223,6 +229,46 @@ function App() {
     setAdminToken('');
     localStorage.removeItem('utm_admin_token');
     showToast("Logged out of Admin Portal", "info");
+  };
+
+  // Handle Passcode Update
+  const handleChangePasscode = (e) => {
+    e.preventDefault();
+    setPasscodeChangeError('');
+    setPasscodeChangeSuccess('');
+
+    if (newAdminPasscode.length < 4) {
+      setPasscodeChangeError('New passcode must be at least 4 characters long.');
+      return;
+    }
+
+    if (newAdminPasscode !== confirmAdminPasscode) {
+      setPasscodeChangeError('Passcodes do not match.');
+      return;
+    }
+
+    fetch('./api/admin/passcode', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-admin-key': adminToken
+      },
+      body: JSON.stringify({ new_passcode: newAdminPasscode })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setAdminToken(data.new_passcode);
+          localStorage.setItem('utm_admin_token', data.new_passcode);
+          setPasscodeChangeSuccess('Admin passcode updated successfully! Your session key has been refreshed.');
+          setNewAdminPasscode('');
+          setConfirmAdminPasscode('');
+          showToast('Passcode updated successfully', 'success');
+        } else {
+          setPasscodeChangeError(data.error || 'Failed to update passcode');
+        }
+      })
+      .catch(err => setPasscodeChangeError('Server error while updating passcode'));
   };
 
   // Handle Outgoing Link Click
@@ -1013,9 +1059,10 @@ function App() {
                 <div>
                   <h1 className="font-display font-extrabold text-2xl text-gray-900">Admin Portal</h1>
                   <p className="text-xs text-gray-500 mt-1">Enter administrative passcode to manage products & categories.</p>
-                  <p className="text-[11px] text-utm-maroon font-semibold mt-2 bg-utm-gold/20 p-1.5 rounded-lg border border-utm-gold/40">
-                    Default passcode: <code className="font-mono font-bold">utm2025admin</code>
-                  </p>
+                  <div className="inline-flex items-center gap-1.5 text-[11px] text-emerald-700 font-semibold mt-2.5 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Authorized Administration Access</span>
+                  </div>
                 </div>
 
                 <form onSubmit={handleAdminLogin} className="space-y-4 text-left">
@@ -1112,6 +1159,16 @@ function App() {
                   >
                     <BarChart3 className="w-4 h-4" />
                     <span>Click Analytics</span>
+                  </button>
+
+                  <button
+                    onClick={() => setAdminTab('settings')}
+                    className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 ${
+                      adminTab === 'settings' ? 'bg-utm-maroon text-white shadow' : 'bg-white text-gray-600 hover:bg-slate-100'
+                    }`}
+                  >
+                    <Key className="w-4 h-4" />
+                    <span>Security & Passcode</span>
                   </button>
                 </div>
 
