@@ -395,35 +395,16 @@ function App() {
           <div className="pb-16">
             
             {/* HERO BANNER */}
-            <section className="bg-gradient-to-b from-[#7A0026] via-[#58001D] to-[#400015] text-white py-10 px-4 sm:px-6 lg:px-8 shadow-inner relative overflow-hidden">
+            <section className="bg-gradient-to-b from-[#7A0026] via-[#58001D] to-[#400015] text-white py-8 px-4 sm:px-6 lg:px-8 shadow-inner relative overflow-hidden">
               <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-utm-gold/10 rounded-full blur-3xl pointer-events-none" />
               <div className="max-w-7xl mx-auto relative z-10">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                  <div className="max-w-2xl">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-utm-gold/20 border border-utm-gold/30 text-utm-gold text-xs font-semibold mb-3">
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Universiti Teknologi Malaysia Student Marketplace</span>
-                    </div>
-                    <h1 className="font-display text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
-                      Compare Prices, Read Verified Reviews & Discover Student Products
-                    </h1>
-                    <p className="mt-2 text-sm sm:text-base text-gray-200">
-                      Browse authentic Shopee, TikTok Shop, WhatsApp, and Google Forms listings curated for UTM students at Skudai & KL campuses.
-                    </p>
-                  </div>
-
-                  {/* Quick stats badge */}
-                  <div className="grid grid-cols-2 gap-3 bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10">
-                    <div className="text-center p-2">
-                      <div className="font-display text-xl sm:text-2xl font-bold text-utm-gold">100%</div>
-                      <div className="text-[11px] text-gray-300">Verified Reviews</div>
-                    </div>
-                    <div className="text-center p-2">
-                      <div className="font-display text-xl sm:text-2xl font-bold text-utm-gold">4 Platforms</div>
-                      <div className="text-[11px] text-gray-300">Shopee, TikTok, WA, Forms</div>
-                    </div>
-                  </div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-utm-gold/20 border border-utm-gold/30 text-utm-gold text-xs font-semibold mb-3">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>UTM Student Marketplace</span>
                 </div>
+                <h1 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
+                  Compare Price, Read Reviews and Discover Student Products
+                </h1>
               </div>
             </section>
 
