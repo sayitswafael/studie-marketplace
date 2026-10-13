@@ -72,6 +72,14 @@ export class App extends DurableObject {
       );
     `);
 
+    // Ensure admin passcode is set or migrated to sayed2007#studiemarketplace
+    const adminCheck = this.ctx.storage.sql.exec(`SELECT value FROM admin_config WHERE key = 'admin_key'`).one();
+    if (!adminCheck || adminCheck.value === 'utm2025admin') {
+      this.ctx.storage.sql.exec(
+        `INSERT OR REPLACE INTO admin_config (key, value) VALUES ('admin_key', 'sayed2007#studiemarketplace')`
+      );
+    }
+
     // Seed default categories if empty
     const catCheck = this.ctx.storage.sql.exec(`SELECT COUNT(*) as count FROM categories`).one();
     if ((catCheck.count as number) === 0) {
@@ -101,7 +109,7 @@ export class App extends DurableObject {
 
     // Default admin secret
     this.ctx.storage.sql.exec(
-      `INSERT OR REPLACE INTO admin_config (key, value) VALUES ('admin_key', 'utm2025admin')`
+      `INSERT OR REPLACE INTO admin_config (key, value) VALUES ('admin_key', 'sayed2007#studiemarketplace')`
     );
 
     // Initial Seed Products
@@ -530,7 +538,7 @@ export class App extends DurableObject {
 
     const verifyAdmin = (reqKey: string | undefined): boolean => {
       const stored = this.ctx.storage.sql.exec(`SELECT value FROM admin_config WHERE key = 'admin_key'`).one();
-      const adminPass = stored ? (stored.value as string) : 'utm2025admin';
+      const adminPass = stored ? (stored.value as string) : 'sayed2007#studiemarketplace';
       return reqKey === adminPass;
     };
 
