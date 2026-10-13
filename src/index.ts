@@ -545,6 +545,28 @@ export class App extends DurableObject {
       }
     });
 
+    // Update Admin Passcode
+    this.app.put('/api/admin/passcode', async (c) => {
+      const key = c.req.header('x-admin-key');
+      if (!verifyAdmin(key)) {
+        return c.json({ error: 'Unauthorized: Invalid Admin Secret Key' }, 401);
+      }
+
+      const body = await c.req.json();
+      const { new_passcode } = body;
+
+      if (!new_passcode || typeof new_passcode !== 'string' || new_passcode.trim().length < 4) {
+        return c.json({ error: 'New passcode must be at least 4 characters long.' }, 400);
+      }
+
+      this.ctx.storage.sql.exec(
+        `INSERT OR REPLACE INTO admin_config (key, value) VALUES ('admin_key', ?)`,
+        new_passcode.trim()
+      );
+
+      return c.json({ success: true, new_passcode: new_passcode.trim(), message: 'Admin passcode updated successfully.' });
+    });
+
     // Get Admin Products List (Includes Pending, Approved, Rejected)
     this.app.get('/api/admin/products', (c) => {
       const key = c.req.header('x-admin-key');
