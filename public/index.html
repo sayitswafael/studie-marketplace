@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#FAF8F5]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studie Marketplace | UTM Student Product & Affiliate Hub</title>
+  
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            utm: {
+              maroon: '#7A0026',
+              maroonDark: '#58001D',
+              maroonLight: '#9B0031',
+              gold: '#FFB800',
+              goldDark: '#D4AF37',
+              goldLight: '#FFF2C6',
+              cream: '#FAF8F5',
+              cardBg: '#FFFFFF',
+              border: '#E8E3DA'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom scrollbars and styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FAF8F5;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D4AF37;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #7A0026;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #1F2937;
+    }
+    h1, h2, h3, h4, h5, h6, .font-display {
+      font-family: 'Outfit', sans-serif;
+    }
+  </style>
+
+  <!-- Importmap for React 18 and Lucide React -->
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+      "react-dom": "https://esm.sh/react-dom@18.3.1",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+      "lucide-react": "https://esm.sh/lucide-react@0.400.0?external=react,react-dom"
+    }
+  }
+  </script>
+
+  <!-- Babel Standalone -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="h-full flex flex-col antialiased selection:bg-utm-gold selection:text-utm-maroon">
+  <div id="root" class="min-h-full flex flex-col"></div>
+
+  <!-- Main React App Module -->
+  <script type="text/babel" data-type="module" data-presets="react" src="./app.jsx"></script>
+</body>
+</html>
